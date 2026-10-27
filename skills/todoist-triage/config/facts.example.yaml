@@ -1,0 +1,6 @@
+# Copy to facts.local.yaml (gitignored) and fill in. Dates the rules can use that Todoist doesn't hold.
+# `match` is a keyword in the task title. `deadline` = drop-dead date; `due` = your personal target date.
+# A matched deadline stops the "unknown deadline -> p1 + @review" path for always_p1 / money_by_deadline words.
+facts:
+  - {match: insurance, deadline: 2027-01-15, note: "example: enrollment closes"}
+  - {match: tax, deadline: 2027-04-15, due: 2027-03-01, note: "example: filing deadline, personal target earlier"}

@@ -1,0 +1,29 @@
+# Sample golden dataset (generic). Used by `triage.py eval`. Put your own rows in references/golden.local.yaml (gitignored);
+# eval prefers that file when it exists.
+#   dest: Inbox/<section> | project name   labels: context first, then modifiers   priority: p1..p4
+#   deadline/due: only when a real date applies (due: today = set to today)   review: marks a @review question
+#   needs_claude: true = rules defer it; excluded from the rules eval   split: train | test (held out)
+tasks:
+  - {title: Wash the kitchen rug, dest: Inbox/House, labels: ["@House"], priority: p3, split: train, why: "'wash' + household object"}
+  - {title: Declutter the hall closet, dest: Inbox/House, labels: ["@House"], priority: p3, split: test}
+  - {title: Pack boxes for the move, dest: Inbox/House, labels: ["@House"], priority: p3, split: train, why: "'pack' = House; mailing would be a separate Errand step"}
+  - {title: Assemble bookshelf, dest: Inbox/House, labels: ["@House"], priority: p3, split: test, why: "'assemble' defaults to House"}
+  - {title: Assemble swing set outside, dest: Inbox/Outside, labels: ["@Outside"], priority: p3, split: test, why: "explicit 'outside' overrides"}
+  - {title: Transplant tomato seedlings, dest: Inbox/Outside, labels: ["@Outside"], priority: p3, split: train}
+  - {title: Mow the lawn, dest: Inbox/Outside, labels: ["@Outside"], priority: p3, split: test}
+  - {title: Sharpen pruning shears, dest: Inbox/Outside, labels: ["@Outside"], priority: p3, split: train, why: "tool upkeep for outdoor work"}
+  - {title: Return library books, dest: Inbox/Errand, labels: ["@Errand"], priority: p3, split: train}
+  - {title: Pick up dry cleaning, dest: Inbox/Errand, labels: ["@Errand"], priority: p3, split: test}
+  - {title: Mail the package, dest: Inbox/Errand, labels: ["@Errand"], priority: p3, split: train}
+  - {title: Cancel gym subscription, dest: Inbox/Computer/phone, labels: ["@Computer/phone", "@quick"], priority: p2, split: train, why: "cancel + one step = quick; recurring money = p2"}
+  - {title: Email the landlord, dest: Inbox/Computer/phone, labels: ["@Computer/phone", "@quick"], priority: p3, split: test}
+  - {title: Order new phone charger, dest: Inbox/To Buy, labels: ["@Computer/phone", "@buy"], priority: p3, split: train, why: "purchase verb -> To Buy"}
+  - {title: Order a bike shed, dest: Inbox/To Buy, labels: ["@Computer/phone", "@buy"], priority: p3, split: test, why: "purchase verb beats the location noun"}
+  - {title: Pay the electric bill, dest: Inbox/Computer/phone, labels: ["@Computer/phone"], priority: p1, due: today, split: test, why: "pay -> p1, due today"}
+  - {title: Fix the gate latch!, dest: Inbox/House, labels: ["@House"], priority: p1, split: test, why: "'!' -> p1"}
+  - {title: Apply to the staff engineer role, dest: Career & Learning, labels: ["@Computer/phone", "@focus"], priority: p2, split: train, why: "career verb -> Career & Learning, 30+ min focus"}
+  - {title: Read a chapter of the novel, dest: Reading List, labels: [], priority: p3, split: train}
+  - {title: Listen to that podcast episode, dest: Inbox, labels: ["@someday"], priority: p4, review: someday, split: test, why: "no commitment -> @someday suggestion (stays put)"}
+  - {title: Sign up for health insurance, dest: Inbox/Computer/phone, labels: ["@Computer/phone", "@review"], priority: p1, review: classify, split: train, why: "health -> p1; deadline unknown -> @review"}
+  - {title: Water the tomatoes, dest: Inbox/Outside, labels: ["@Outside"], priority: p3, split: train}
+  - {title: Measure the patio, needs_claude: true, dest: Inbox/Outside, labels: ["@Outside"], priority: p3, split: test, why: "physical prep step: judgment, not rules"}

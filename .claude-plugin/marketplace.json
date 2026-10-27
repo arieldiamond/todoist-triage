@@ -1,0 +1,12 @@
+{
+  "name": "arieldiamond-skills",
+  "description": "Claude Code skills by arieldiamond.",
+  "owner": {"name": "arieldiamond", "url": "https://github.com/arieldiamond"},
+  "plugins": [
+    {
+      "name": "todoist-triage",
+      "source": "./",
+      "description": "Triage new Todoist Inbox tasks with a GTD/ECHO schema, a daily focus list, and undo."
+    }
+  ]
+}

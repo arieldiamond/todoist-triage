@@ -1,0 +1,53 @@
+# Shipped defaults for triage.py. Put your own changes in config/rules.local.yaml (deep-merged over this file, gitignored).
+# Matching is case-insensitive, word-start anchored, with optional -s/-es/-ed/-ing endings.
+# Exactly one context match = confident. Zero = needs Claude. Several = conflict (needs Claude) unless a purchase verb is present.
+
+scope:
+  braindump: null               # optional second capture project (top-level tasks); null = Inbox only
+  inbox: Inbox                  # project whose top-level, section-less tasks are processed
+
+# Daily digest comment lands on this task (created if missing; stays uncompletable)
+focus: {title: Focus, project: Inbox}
+
+# Context label used for career items, purchases and short questions
+default_context: "@Computer/phone"
+
+# Inbox section name per context label (label -> section)
+sections:
+  "@House": House
+  "@Outside": Outside
+  "@Errand": Errand
+  "@Computer/phone": Computer/phone
+  "@buy": To Buy
+
+projects:
+  career: Career & Learning
+  reading: Reading List
+
+context:
+  - {label: "@Outside", match: [transplant, "split ", plant, water, mow, rake, prune, weed, compost, garden, shed, garage, shears, gravel, outside]}
+  - {label: "@House", match: [pack, wash, clean, "put away", sort, organize, declutter, find, mend, "install ", fix, assemble, hang, wax]}
+  - {label: "@Errand", match: [mail, "pick up", return, "drop off", "post office", "go to"]}
+  - {label: "@Computer/phone", match: [app, website, online, subscription, software, account, email, text, call, cancel, "sign up", submit, apply, order, pay, schedule, research, "look up", "check ", "log in", delete, review, marketplace, close]}
+
+explicit_context: {"@Outside": [outside]}   # typing this word overrides other context keywords ("assemble shelf outside" -> Outside)
+force_llm: [measure, "take photos", photograph]   # physical prep steps: context depends on where the object is
+buy_verbs: [order, buy]                 # purchase verbs win over location nouns ("Order bike shed" is shopping)
+quick_verbs: [cancel, email, text, call, schedule]
+quick_max_words: 6
+focus_verbs: [apply]                    # needs 30+ min uninterrupted -> @focus
+career: [apply, resume, interview, cert]   # -> Career & Learning, default context, p2
+reading: ["read a chapter", "read the"]    # -> Reading List, no context label
+project_words: ["set up"]               # -> @review: ask for the single first step
+always_p1: [insurance]                  # health/legal: p1 regardless; unknown deadline -> also reminder + @review
+money_by_deadline: [tax]                # p1 if deadline <=7 days, else p2; unknown deadline -> p1 + reminder + @review
+someday: ["decide if", consider, maybe, someday, listen, watch, "should i"]   # -> @someday suggestion; NEVER moves to Someday/Maybe
+holidays: {}                            # e.g. {halloween: [10, 31]}: name in title -> deadline (next occurrence)
+pay_words: [pay]                        # p1 and due today, unless the task already has a due date or deadline
+explicit_p1_char: "!"                   # an exclamation point anywhere in the title -> p1
+cancel_priority: p2                     # subscriptions/recurring money
+
+caps:
+  p1_open: 3                            # more than this: downgrade to p2 with a comment (NOT for '!' or 'pay' tasks)
+  focus_critical: 1                     # critical picks per day set due-today
+  focus_quick: 3                        # quick-win picks per day set due-today

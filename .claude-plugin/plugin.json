@@ -1,0 +1,10 @@
+{
+  "name": "todoist-triage",
+  "version": "0.1.0",
+  "description": "Triage new Todoist Inbox tasks with a GTD/ECHO schema: rules first, Claude for leftovers, a short daily focus list, and undo.",
+  "author": {"name": "arieldiamond", "url": "https://github.com/arieldiamond"},
+  "homepage": "https://github.com/arieldiamond/todoist-triage",
+  "repository": "https://github.com/arieldiamond/todoist-triage",
+  "license": "MIT",
+  "keywords": ["todoist", "gtd", "productivity", "adhd", "triage"]
+}
